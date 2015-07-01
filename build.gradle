@@ -1,0 +1,36 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '1.2.1'
+}
+
+group 'be.bendem.manga'
+version '0.1'
+
+sourceCompatibility = 1.8
+
+compileJava {
+    options.encoding = 'UTF-8'
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'be.bendem.manga', name: 'MangaScraper', version: '0.1'
+}
+
+shadowJar {
+    exclude '*junit*'
+    exclude '*hamcrest*'
+}
+
+build.dependsOn(shadowJar)
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'be.bendem.manga.library.MangaLibrary'
+        attributes 'Class-Path': '/usr/java/default/jre/lib/ext/jfxrt.jar /usr/java/default/jre/lib/jfr.jar' // TODO Find a real fix at some point
+    }
+}
