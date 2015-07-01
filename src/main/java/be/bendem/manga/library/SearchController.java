@@ -11,6 +11,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 import java.net.URL;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class SearchController implements Initializable {
@@ -18,6 +19,8 @@ public class SearchController implements Initializable {
     @FXML private Button selectChapters;
     @FXML private TextField searchField;
     @FXML private ListView<String> searchResult;
+
+    private Map<String, String> currentSearchResult;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -32,7 +35,8 @@ public class SearchController implements Initializable {
         }
 
         searchResult.getItems().clear();
-        searchResult.getItems().addAll(new MangaEdenScraper().search(searchField.getText()).keySet());
+        currentSearchResult = new MangaEdenScraper().search(searchField.getText());
+        searchResult.getItems().addAll(currentSearchResult.keySet());
     }
 
     public void searchResultKeyPressed(KeyEvent event) {
@@ -43,8 +47,9 @@ public class SearchController implements Initializable {
         selectChapters.getOnAction().handle(new ActionEvent(searchResult, selectChapters));
     }
 
-    public void onChapterSelect(ActionEvent actionEvent) {
-
+    public void onChapterSelect(ActionEvent event) {
+        ChapterSelectionController ctrl = MangaLibraryController.instance.setMain("chapter-selection.fxml");
+        ctrl.setMangaUrl(currentSearchResult.get(searchResult.getSelectionModel().getSelectedItem()));
     }
 
 }

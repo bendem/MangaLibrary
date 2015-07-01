@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" fx:controller="be.bendem.manga.library.ChapterSelectionController" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox maxWidth="1.7976931348623157E308">
+         <children>
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" fx:id="backButton" text="Back" onAction="#onBack" HBox.hgrow="ALWAYS">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+            </Button>
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" fx:id="selectAllButton" text="Select All" onAction="#onSelectAll" HBox.hgrow="ALWAYS">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+            </Button>
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" fx:id="selectNoneButton" text="Select None" onAction="#onSelectNone" HBox.hgrow="ALWAYS">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
+      <ListView maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS" fx:id="chapters">
+         <VBox.margin>
+            <Insets bottom="5.0" top="5.0" />
+         </VBox.margin>
+      </ListView>
+      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" fx:id="downloadButton" onAction="#onDownload" text="Download">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+   </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</VBox>
