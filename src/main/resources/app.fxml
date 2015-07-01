@@ -1,23 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
+<?import javafx.scene.input.*?>
+<?import java.lang.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 
 <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.bendem.manga.library.MangaLibraryController">
-   <children>
-      <Accordion fx:id="accordion" prefWidth="150.0">
-        <panes>
-          <TitledPane fx:id="searchPane" onMouseClicked="#handleClick" text="Search">
-            <content>
-              <AnchorPane />
-            </content>
-               <font>
-                  <Font size="15.0" />
-               </font>
-          </TitledPane>
-        </panes>
-      </Accordion>
-      <AnchorPane fx:id="main" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="350.0" HBox.hgrow="ALWAYS" />
-   </children>
+    <children>
+        <VBox>
+            <children>
+                <SplitMenuButton maxWidth="1.7976931348623157E308" text="_Search">
+                    <items>
+                        <MenuItem text="_Downloads" />
+                        <MenuItem text="_Config" />
+                        <MenuItem text="_Import" />
+                    </items>
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets bottom="5.0" />
+                    </VBox.margin>
+                </SplitMenuButton>
+                <Accordion fx:id="accordion" maxHeight="1.7976931348623157E308" prefWidth="150.0" VBox.vgrow="ALWAYS" />
+            </children>
+            <HBox.margin>
+                <Insets bottom="5.0" left="5.0" top="5.0" />
+            </HBox.margin>
+        </VBox>
+        <AnchorPane fx:id="main" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="350.0" HBox.hgrow="ALWAYS" />
+    </children>
 </HBox>

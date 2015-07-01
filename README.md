@@ -20,4 +20,3 @@ Once this is done, you can compile MangaLibrary using
 ```bash
 gradle build
 ```
-

@@ -15,14 +15,14 @@ import java.util.ResourceBundle;
 
 public class SearchController implements Initializable {
 
-    @FXML private Button downloadButton;
+    @FXML private Button selectChapters;
     @FXML private TextField searchField;
     @FXML private ListView<String> searchResult;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         searchResult.getSelectionModel().selectedItemProperty().addListener((obj, oldVal, newVal) ->
-            downloadButton.setDisable(newVal == null || newVal.isEmpty())
+                selectChapters.setDisable(newVal == null || newVal.isEmpty())
         );
     }
 
@@ -35,15 +35,16 @@ public class SearchController implements Initializable {
         searchResult.getItems().addAll(new MangaEdenScraper().search(searchField.getText()).keySet());
     }
 
-    public void onDownload(ActionEvent event) {
-        System.out.println(event);
-    }
-
     public void searchResultKeyPressed(KeyEvent event) {
         if(event.getCode() != KeyCode.ENTER) {
             return;
         }
 
-        downloadButton.getOnAction().handle(new ActionEvent(searchResult, downloadButton));
+        selectChapters.getOnAction().handle(new ActionEvent(searchResult, selectChapters));
     }
+
+    public void onChapterSelect(ActionEvent actionEvent) {
+
+    }
+
 }
