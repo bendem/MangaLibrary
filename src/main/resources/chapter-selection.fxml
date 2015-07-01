@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 
-<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" fx:controller="be.bendem.manga.library.ChapterSelectionController" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.bendem.manga.library.ChapterSelectionController">
    <children>
       <HBox maxWidth="1.7976931348623157E308">
          <children>
-            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" fx:id="backButton" text="Back" onAction="#onBack" HBox.hgrow="ALWAYS">
+            <Button fx:id="backButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBack" text="Back" HBox.hgrow="ALWAYS">
                <font>
                   <Font size="15.0" />
                </font>
@@ -17,7 +18,7 @@
                   <Insets right="5.0" />
                </HBox.margin>
             </Button>
-            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" fx:id="selectAllButton" text="Select All" onAction="#onSelectAll" HBox.hgrow="ALWAYS">
+            <Button fx:id="selectAllButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onSelectAll" text="Select All" HBox.hgrow="ALWAYS">
                <font>
                   <Font size="15.0" />
                </font>
@@ -25,19 +26,27 @@
                   <Insets right="5.0" />
                </HBox.margin>
             </Button>
-            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" fx:id="selectNoneButton" text="Select None" onAction="#onSelectNone" HBox.hgrow="ALWAYS">
+            <Button fx:id="selectNoneButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onSelectNone" text="Select None" HBox.hgrow="ALWAYS">
                <font>
                   <Font size="15.0" />
                </font>
             </Button>
          </children>
       </HBox>
-      <ListView maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS" fx:id="chapters">
+      <Text fx:id="title" text="Chapter selection for" textOrigin="CENTER">
+         <font>
+            <Font size="15.0" />
+         </font>
+         <VBox.margin>
+            <Insets top="5.0" />
+         </VBox.margin>
+      </Text>
+      <ListView fx:id="chapters" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
          <VBox.margin>
             <Insets bottom="5.0" top="5.0" />
          </VBox.margin>
       </ListView>
-      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" fx:id="downloadButton" onAction="#onDownload" text="Download">
+      <Button fx:id="downloadButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onDownload" text="Download">
          <font>
             <Font size="15.0" />
          </font>

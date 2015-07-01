@@ -49,7 +49,8 @@ public class SearchController implements Initializable {
 
     public void onChapterSelect(ActionEvent event) {
         ChapterSelectionController ctrl = MangaLibraryController.instance.setMain("chapter-selection.fxml");
-        ctrl.setMangaUrl(currentSearchResult.get(searchResult.getSelectionModel().getSelectedItem()));
+        String selected = searchResult.getSelectionModel().getSelectedItem();
+        ctrl.setManga(selected, currentSearchResult.get(selected));
     }
 
 }

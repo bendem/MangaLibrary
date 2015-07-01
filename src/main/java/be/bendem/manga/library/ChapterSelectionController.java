@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.text.Text;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -16,17 +17,19 @@ import java.util.stream.Collectors;
 
 public class ChapterSelectionController implements Initializable {
 
+    @FXML private Text title;
     @FXML private Button selectAllButton;
     @FXML private Button selectNoneButton;
     @FXML private Button downloadButton;
     @FXML private ListView<String> chapters;
     @FXML private Button backButton;
 
-    public void setMangaUrl(String mangaUrl) {
+    public void setManga(String name, String url) {
         System.out.println("Feeding data");
+        title.setText(title.getText() + " '" + name + "'");
         chapters.getItems().addAll(
             new MangaScraper(new MangaEdenScraper())
-                .getChapters(mangaUrl).stream()
+                .getChapters(url).stream()
                 .map(chapter -> chapter.name)
                 .collect(Collectors.toList())
         );
