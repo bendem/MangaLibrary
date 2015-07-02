@@ -7,9 +7,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
-import javafx.scene.text.Text;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 public class ChapterSelectionController implements Initializable {
 
-    @FXML private Text title;
+    @FXML private Label title;
     @FXML private Button selectAllButton;
     @FXML private Button selectNoneButton;
     @FXML private Button downloadButton;
