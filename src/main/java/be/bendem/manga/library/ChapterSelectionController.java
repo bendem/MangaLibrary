@@ -26,7 +26,7 @@ public class ChapterSelectionController implements Initializable {
 
     public void setManga(String name, String url) {
         System.out.println("Feeding data");
-        title.setText(title.getText() + " '" + name + "'");
+        title.setText(name);
         chapters.getItems().addAll(
             new MangaScraper(new MangaEdenScraper())
                 .getChapters(url).stream()
@@ -45,6 +45,7 @@ public class ChapterSelectionController implements Initializable {
     }
 
     public void onBack(ActionEvent event) {
+        MangaLibraryController.instance.popHistory();
     }
 
     public void onSelectAll(ActionEvent event) {

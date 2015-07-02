@@ -1,7 +1,8 @@
 package be.bendem.manga.library;
 
+import be.bendem.manga.library.utils.Tuple;
 import javafx.collections.FXCollections;
-import javafx.event.Event;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -15,8 +16,11 @@ import javafx.scene.text.Font;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Stack;
 
 public class MangaLibraryController implements Initializable {
 
@@ -25,6 +29,17 @@ public class MangaLibraryController implements Initializable {
 
     @FXML private Accordion accordion;
     @FXML private AnchorPane main;
+
+    private final Map<String, Tuple<Parent, Object>> mainCache;
+    private final Stack<String> mainHistory;
+    private Object mainCurrentCtrl;
+    private String mainCurrentFxml;
+
+    public MangaLibraryController() {
+        mainCache = new HashMap<>();
+        mainHistory = new Stack<>();
+        mainCurrentFxml = "";
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -45,35 +60,59 @@ public class MangaLibraryController implements Initializable {
         accordion.getPanes().add(pane);
     }
 
+    @SuppressWarnings("unchecked")
     /* package */ <T> T setMain(String fxml) {
-        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(fxml));
-        try {
-            setMain((Parent) loader.load());
-        } catch(IOException e) {
-            throw new RuntimeException(e);
+        if(mainCurrentFxml.equals(fxml)) {
+            return (T) mainCurrentCtrl;
         }
-        return loader.getController();
+
+        Tuple<Parent, Object> parentCtrlTuple = mainCache.get(fxml);
+
+        if(parentCtrlTuple == null) {
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(fxml));
+            try {
+                parentCtrlTuple = new Tuple<>(loader.load(), loader.getController());
+                mainCache.put(fxml, parentCtrlTuple);
+            } catch(IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        setMain(parentCtrlTuple.getLeft());
+        mainHistory.push(mainCurrentFxml);
+        mainCurrentFxml = fxml;
+        mainCurrentCtrl = parentCtrlTuple.getRight();
+
+        return (T) mainCurrentCtrl;
     }
 
-    /* package */ void setMain(Parent content) {
+    private void setMain(Parent content) {
         main.getChildren().setAll(content);
-        //if(main.getChildren().isEmpty()) {
-        //    System.out.println("Empty before, no transition");
-        //    main.getChildren().add(content);
-        //    return;
-        //}
-        //
-        //ParallelTransition transition = new ParallelTransition(
-        //    new TranslateTransition(Duration.seconds(0.5), main.getChildren().get(0)),
-        //    new TranslateTransition(Duration.seconds(0.5), content)
-        //);
-        //
-        //transition.setOnFinished(e -> main.getChildren().remove(0));
-        //transition.play();
+        // TODO Slide animation?
     }
 
-    public void handleClick(Event event) {
-        System.out.println("hi " + event);
+    /* package */ void popHistory() {
+        if(mainHistory.isEmpty()) {
+            return;
+        }
+
+        setMain(mainHistory.pop());
+    }
+
+    public void onSearchAction(ActionEvent event) {
+        setMain("search.fxml");
+    }
+
+    public void onDownloadsAction(ActionEvent event) {
+        setMain("downloads.fxml");
+    }
+
+    public void onConfigAction(ActionEvent event) {
+        setMain("config.fxml");
+    }
+
+    public void onImportAction(ActionEvent event) {
+        setMain("import.fxml");
     }
 
 }

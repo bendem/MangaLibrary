@@ -8,6 +8,14 @@
 
 <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.bendem.manga.library.ChapterSelectionController">
    <children>
+      <Text fx:id="title" text="Chapter selection" textOrigin="CENTER" VBox.vgrow="NEVER">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="10.0" top="5.0" />
+         </VBox.margin>
+      </Text>
       <HBox maxWidth="1.7976931348623157E308" VBox.vgrow="NEVER">
          <children>
             <Button fx:id="backButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBack" text="Back" HBox.hgrow="ALWAYS">
@@ -36,11 +44,6 @@
             <Insets bottom="5.0" />
          </VBox.margin>
       </HBox>
-      <Text fx:id="title" text="Chapter selection for" textOrigin="CENTER" VBox.vgrow="NEVER">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Text>
       <ListView fx:id="chapters" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
          <VBox.margin>
             <Insets bottom="5.0" top="5.0" />

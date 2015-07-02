@@ -11,11 +11,11 @@
     <children>
         <VBox>
             <children>
-                <SplitMenuButton maxWidth="1.7976931348623157E308" text="_Search">
+                <SplitMenuButton maxWidth="1.7976931348623157E308" onAction="#onSearchAction" text="_Search">
                     <items>
-                        <MenuItem text="_Downloads" />
-                        <MenuItem text="_Config" />
-                        <MenuItem text="_Import" />
+                        <MenuItem onAction="#onDownloadsAction" text="_Downloads" />
+                        <MenuItem onAction="#onConfigAction" text="_Config" />
+                        <MenuItem onAction="#onImportAction" text="_Import" />
                     </items>
                     <font>
                         <Font size="15.0" />
