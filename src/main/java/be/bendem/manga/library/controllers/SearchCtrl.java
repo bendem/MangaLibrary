@@ -1,5 +1,6 @@
-package be.bendem.manga.library;
+package be.bendem.manga.library.controllers;
 
+import be.bendem.manga.library.MangaLibrary;
 import be.bendem.manga.scraper.implementations.MangaEdenScraper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,18 +15,23 @@ import java.net.URL;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-public class SearchController implements Initializable {
+public class SearchCtrl implements Initializable {
 
     @FXML private Button selectChapters;
     @FXML private TextField searchField;
     @FXML private ListView<String> searchResult;
 
+    private final MangaLibrary app;
     private Map<String, String> currentSearchResult;
+
+    public SearchCtrl(MangaLibrary app) {
+        this.app = app;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         searchResult.getSelectionModel().selectedItemProperty().addListener((obj, oldVal, newVal) ->
-                selectChapters.setDisable(newVal == null || newVal.isEmpty())
+            selectChapters.setDisable(newVal == null || newVal.isEmpty())
         );
     }
 
@@ -49,8 +55,9 @@ public class SearchController implements Initializable {
 
     public void onChapterSelect(ActionEvent event) {
         String selected = searchResult.getSelectionModel().getSelectedItem();
-        MangaLibraryController.instance
-            .<ChapterSelectionController>setMain("chapter-selection.fxml")
+        app
+            .getController()
+            .<ChapterSelectionCtrl>setMain("chapter-selection.fxml")
             .setManga(selected, currentSearchResult.get(selected));
     }
 

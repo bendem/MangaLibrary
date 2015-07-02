@@ -1,5 +1,6 @@
-package be.bendem.manga.library;
+package be.bendem.manga.library.controllers;
 
+import be.bendem.manga.library.MangaLibrary;
 import be.bendem.manga.library.utils.Tuple;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -20,31 +21,25 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.Stack;
 
-public class MangaLibraryController implements Initializable {
-
-    // TODO Find another way, that's horrible
-    public static MangaLibraryController instance;
+public class MangaLibraryCtrl implements Initializable {
 
     @FXML private Accordion accordion;
     @FXML private AnchorPane main;
 
+    private final MangaLibrary app;
     private final Map<String, Tuple<Parent, Object>> mainCache;
-    private final Stack<String> mainHistory;
-    private Object mainCurrentCtrl;
     private String mainCurrentFxml;
+    private Object mainCurrentCtrl;
 
-    public MangaLibraryController() {
+    public MangaLibraryCtrl(MangaLibrary app) {
+        this.app = app;
         mainCache = new HashMap<>();
-        mainHistory = new Stack<>();
         mainCurrentFxml = "";
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        instance = this; // Damn son
-
         setMain("search.fxml");
 
         // TODO Load existing mangas
@@ -53,15 +48,8 @@ public class MangaLibraryController implements Initializable {
         }});
     }
 
-    /* package */ void addManga(String name, List<String> chapters) {
-        TitledPane pane = new TitledPane(name, new ListView<>(FXCollections.observableArrayList(chapters)));
-        pane.setFont(new Font(15));
-
-        accordion.getPanes().add(pane);
-    }
-
     @SuppressWarnings("unchecked")
-    /* package */ <T> T setMain(String fxml) {
+    public <T> T setMain(String fxml) {
         if(mainCurrentFxml.equals(fxml)) {
             return (T) mainCurrentCtrl;
         }
@@ -70,6 +58,7 @@ public class MangaLibraryController implements Initializable {
 
         if(parentCtrlTuple == null) {
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(fxml));
+            loader.setControllerFactory(app.controllerFactory);
             try {
                 parentCtrlTuple = new Tuple<>(loader.load(), loader.getController());
                 mainCache.put(fxml, parentCtrlTuple);
@@ -79,24 +68,18 @@ public class MangaLibraryController implements Initializable {
         }
 
         setMain(parentCtrlTuple.getLeft());
-        mainHistory.push(mainCurrentFxml);
+        app.pushHistory(mainCurrentFxml);
         mainCurrentFxml = fxml;
         mainCurrentCtrl = parentCtrlTuple.getRight();
 
         return (T) mainCurrentCtrl;
     }
 
-    private void setMain(Parent content) {
-        main.getChildren().setAll(content);
-        // TODO Slide animation?
-    }
+    public void addManga(String name, List<String> chapters) {
+        TitledPane pane = new TitledPane(name, new ListView<>(FXCollections.observableArrayList(chapters)));
+        pane.setFont(new Font(15));
 
-    /* package */ void popHistory() {
-        if(mainHistory.isEmpty()) {
-            return;
-        }
-
-        setMain(mainHistory.pop());
+        accordion.getPanes().add(pane);
     }
 
     public void onSearchAction(ActionEvent event) {
@@ -115,4 +98,7 @@ public class MangaLibraryController implements Initializable {
         setMain("import.fxml");
     }
 
+    public void setMain(Parent parent) {
+        main.getChildren().setAll(parent);
+    }
 }

@@ -1,5 +1,6 @@
-package be.bendem.manga.library;
+package be.bendem.manga.library.controllers;
 
+import be.bendem.manga.library.MangaLibrary;
 import be.bendem.manga.scraper.MangaScraper;
 import be.bendem.manga.scraper.implementations.MangaEdenScraper;
 import javafx.collections.ListChangeListener;
@@ -15,14 +16,19 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
-public class ChapterSelectionController implements Initializable {
+public class ChapterSelectionCtrl implements Initializable {
 
+    private final MangaLibrary app;
     @FXML private Label title;
     @FXML private Button selectAllButton;
     @FXML private Button selectNoneButton;
     @FXML private Button downloadButton;
     @FXML private ListView<String> chapters;
     @FXML private Button backButton;
+
+    public ChapterSelectionCtrl(MangaLibrary app) {
+        this.app = app;
+    }
 
     public void setManga(String name, String url) {
         System.out.println("Feeding data");
@@ -45,7 +51,7 @@ public class ChapterSelectionController implements Initializable {
     }
 
     public void onBack(ActionEvent event) {
-        MangaLibraryController.instance.popHistory();
+        app.popHistory();
     }
 
     public void onSelectAll(ActionEvent event) {
