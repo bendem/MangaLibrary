@@ -1,6 +1,7 @@
 package be.bendem.manga.library.controllers;
 
 import be.bendem.manga.library.MangaLibrary;
+import be.bendem.manga.library.utils.NumberUtil;
 import be.bendem.manga.library.utils.Tuple;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -23,8 +24,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class MangaLibraryCtrl implements Initializable {
 
@@ -47,36 +48,31 @@ public class MangaLibraryCtrl implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         setMain("search.fxml");
 
-        // TODO That thing is a monster
         String libraryLocation = app.getConfigManager().getApplicationConfig().get("libraryLocation");
-        try {
-            Path library = Paths.get(libraryLocation);
-            Files.walk(library, 1)
-                .filter(path -> !path.equals(library))
-                .filter(Files::isDirectory)
-                .forEachOrdered(exceptionWrappingBlock(path ->
-                    addManga(
-                        path.getFileName().toString(),
-                        Files.walk(path, 1)
-                            .filter(subPath -> !subPath.equals(path))
-                            .map(subPath -> subPath.getFileName().toString())
-                            .sorted((ch1, ch2) -> Integer.compare(getInt(ch1), getInt(ch2)))
-                            .collect(Collectors.toList())
-                    )
-                ));
-        } catch(IOException e) {
-            throw new RuntimeException(e);
-        }
+        Path library = Paths.get(libraryLocation);
+        collectDirectories(library)
+            .forEachOrdered(manga ->
+                addManga(
+                    manga.getFileName().toString(),
+                    collectDirectories(manga)
+                        .map(subPath -> subPath.getFileName().toString())
+                        .sorted((ch1, ch2) -> Integer.compare(
+                            NumberUtil.getInt(ch1),
+                            NumberUtil.getInt(ch2)
+                        ))
+                        .collect(Collectors.toList())
+                )
+            );
     }
 
-    private static Consumer<Path> exceptionWrappingBlock(ThrowingConsumer b) {
-        return arg -> {
-            try {
-                b.accept(arg);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        };
+    Stream<Path> collectDirectories(Path path) {
+        try {
+            return Files.walk(path, 1)
+                .filter(subPath -> !subPath.equals(path))
+                .filter(Files::isDirectory);
+        } catch(IOException e) {
+            throw new RuntimeException("Failed to collect directories from " + path, e);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -133,21 +129,4 @@ public class MangaLibraryCtrl implements Initializable {
         main.getChildren().setAll(parent);
     }
 
-    private static interface ThrowingConsumer {
-        void accept(Path path) throws IOException;
-    }
-
-    private static int getInt(String str) {
-        int i = 0;
-
-        for(char c : str.toCharArray()) {
-            if(c < '0' || c > '9') {
-                break;
-            }
-            i = i * 10 + (c - '0');
-        }
-
-
-        return i;
-    }
 }
