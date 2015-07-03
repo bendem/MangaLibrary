@@ -21,12 +21,12 @@
                         <Insets bottom="5.0" />
                     </VBox.margin>
                 </SplitMenuButton>
-                <Accordion fx:id="accordion" maxHeight="1.7976931348623157E308" prefWidth="150.0" VBox.vgrow="ALWAYS" />
+                <Accordion fx:id="accordion" maxHeight="1.7976931348623157E308" prefWidth="250.0" VBox.vgrow="ALWAYS" />
             </children>
             <HBox.margin>
                 <Insets bottom="5.0" left="5.0" top="5.0" />
             </HBox.margin>
         </VBox>
-        <AnchorPane fx:id="main" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="350.0" HBox.hgrow="ALWAYS" />
+        <AnchorPane fx:id="main" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="400.0" HBox.hgrow="ALWAYS" />
     </children>
 </HBox>

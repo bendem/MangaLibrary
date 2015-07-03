@@ -16,11 +16,15 @@ import javafx.scene.text.Font;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 public class MangaLibraryCtrl implements Initializable {
 
@@ -39,13 +43,40 @@ public class MangaLibraryCtrl implements Initializable {
     }
 
     @Override
+    @SuppressWarnings("")
     public void initialize(URL location, ResourceBundle resources) {
         setMain("search.fxml");
 
-        // TODO Load existing mangas
-        addManga("One piece", new ArrayList<String>() {{
-            add("Chapter 1");
-        }});
+        // TODO That thing is a monster
+        String libraryLocation = app.getConfigManager().getApplicationConfig().get("libraryLocation");
+        try {
+            Path library = Paths.get(libraryLocation);
+            Files.walk(library, 1)
+                .filter(path -> !path.equals(library))
+                .filter(Files::isDirectory)
+                .forEachOrdered(exceptionWrappingBlock(path ->
+                    addManga(
+                        path.getFileName().toString(),
+                        Files.walk(path, 1)
+                            .filter(subPath -> !subPath.equals(path))
+                            .map(subPath -> subPath.getFileName().toString())
+                            .sorted((ch1, ch2) -> Integer.compare(getInt(ch1), getInt(ch2)))
+                            .collect(Collectors.toList())
+                    )
+                ));
+        } catch(IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static Consumer<Path> exceptionWrappingBlock(ThrowingConsumer b) {
+        return arg -> {
+            try {
+                b.accept(arg);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        };
     }
 
     @SuppressWarnings("unchecked")
@@ -100,5 +131,23 @@ public class MangaLibraryCtrl implements Initializable {
 
     public void setMain(Parent parent) {
         main.getChildren().setAll(parent);
+    }
+
+    private static interface ThrowingConsumer {
+        void accept(Path path) throws IOException;
+    }
+
+    private static int getInt(String str) {
+        int i = 0;
+
+        for(char c : str.toCharArray()) {
+            if(c < '0' || c > '9') {
+                break;
+            }
+            i = i * 10 + (c - '0');
+        }
+
+
+        return i;
     }
 }

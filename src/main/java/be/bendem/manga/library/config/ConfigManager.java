@@ -7,13 +7,13 @@ import java.nio.file.Paths;
 
 public class ConfigManager {
 
-    private final Path configPath;
     private final Path applicationPath;
+    private final ApplicationConfig applicationConfig;
 
     public ConfigManager() {
         Path configFolder = getConfigFolder();
-        configPath = configFolder.resolve("config.json");
-        applicationPath = configFolder.resolve("application.json");
+        applicationPath = configFolder.resolve("application.conf");
+        applicationConfig = new ApplicationConfig(applicationPath);
     }
 
     private Path getConfigFolder() {
@@ -31,17 +31,7 @@ public class ConfigManager {
     }
 
     public ConfigMap getApplicationConfig() {
-        return new ConfigMap() {
-            @Override
-            public <T> T get(String key) {
-                return null;
-            }
-
-            @Override
-            public <T> ConfigMap set(String key, T value) {
-                return this;
-            }
-        };
+        return applicationConfig;
     }
 
 }
