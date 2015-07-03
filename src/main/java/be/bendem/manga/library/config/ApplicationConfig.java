@@ -36,7 +36,7 @@ public class ApplicationConfig implements ConfigMap {
             writer.close();
         }
 
-        return Files.lines(path)
+        return Files.lines(path, StandardCharsets.UTF_8)
             .filter(line -> !line.isEmpty())
             .filter(line -> !line.startsWith("#"))
             .filter(line -> {
@@ -56,6 +56,18 @@ public class ApplicationConfig implements ConfigMap {
     }
 
     public ApplicationConfig save() {
+        try {
+            Files.write(
+                path,
+                config.entrySet().stream()
+                    .map(entry -> entry.getKey() + "=" + entry.getValue())
+                    .collect(Collectors.toList()),
+                StandardCharsets.UTF_8
+            );
+        } catch(IOException e) {
+            throw new RuntimeException("Could not save application config", e);
+        }
+
         return this;
     }
 
@@ -69,7 +81,8 @@ public class ApplicationConfig implements ConfigMap {
         // TODO Not use toString?
         config.put(key, value.toString());
 
-        // TODO Save here (offthread?)
+        // TODO Offthread?
+        save();
 
         return this;
     }
