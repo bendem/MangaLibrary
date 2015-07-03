@@ -11,17 +11,11 @@
         <HBox alignment="CENTER" fillHeight="true" maxWidth="1.7976931348623157E308" VBox.vgrow="NEVER">
             <children>
                 <Text text="Search" textOrigin="CENTER" wrappingWidth="51.86279296875" HBox.hgrow="ALWAYS">
-                    <font>
-                        <Font size="15.0" />
-                    </font>
                     <HBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                     </HBox.margin>
                 </Text>
                 <TextField fx:id="searchField" maxWidth="1.7976931348623157E308" onKeyPressed="#searchFieldKeyPressed" HBox.hgrow="ALWAYS">
-                    <font>
-                        <Font size="15.0" />
-                    </font>
                     <HBox.margin>
                         <Insets left="5.0" />
                     </HBox.margin>
@@ -33,9 +27,6 @@
                 <Insets top="5.0" />
             </VBox.margin></ListView>
         <Button fx:id="selectChapters" alignment="CENTER" contentDisplay="CENTER" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#onChapterSelect" text="Select chapters" VBox.vgrow="NEVER">
-            <font>
-                <Font size="15.0" />
-            </font>
             <VBox.margin>
                 <Insets top="5.0" />
             </VBox.margin>

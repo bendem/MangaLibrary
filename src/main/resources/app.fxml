@@ -17,9 +17,6 @@
                         <MenuItem onAction="#onConfigAction" text="_Config" />
                         <MenuItem onAction="#onImportAction" text="_Import" />
                     </items>
-                    <font>
-                        <Font size="15.0" />
-                    </font>
                     <VBox.margin>
                         <Insets bottom="5.0" />
                     </VBox.margin>

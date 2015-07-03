@@ -19,25 +19,16 @@
       <HBox maxWidth="1.7976931348623157E308" VBox.vgrow="NEVER">
          <children>
             <Button fx:id="backButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBack" text="Back" HBox.hgrow="ALWAYS">
-               <font>
-                  <Font size="15.0" />
-               </font>
                <HBox.margin>
                   <Insets right="5.0" />
                </HBox.margin>
             </Button>
             <Button fx:id="selectAllButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onSelectAll" text="Select All" HBox.hgrow="ALWAYS">
-               <font>
-                  <Font size="15.0" />
-               </font>
                <HBox.margin>
                   <Insets right="5.0" />
                </HBox.margin>
             </Button>
             <Button fx:id="selectNoneButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onSelectNone" text="Select None" HBox.hgrow="ALWAYS">
-               <font>
-                  <Font size="15.0" />
-               </font>
             </Button>
          </children>
          <VBox.margin>
@@ -50,9 +41,6 @@
          </VBox.margin>
       </ListView>
       <Button fx:id="downloadButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onDownload" text="Download" VBox.vgrow="NEVER">
-         <font>
-            <Font size="15.0" />
-         </font>
       </Button>
    </children>
    <padding>
