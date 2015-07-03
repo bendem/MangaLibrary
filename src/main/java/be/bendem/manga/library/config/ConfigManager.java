@@ -30,4 +30,18 @@ public class ConfigManager {
         return config;
     }
 
+    public ConfigMap getApplicationConfig() {
+        return new ConfigMap() {
+            @Override
+            public <T> T get(String key) {
+                return null;
+            }
+
+            @Override
+            public <T> ConfigMap set(String key, T value) {
+                return this;
+            }
+        };
+    }
+
 }

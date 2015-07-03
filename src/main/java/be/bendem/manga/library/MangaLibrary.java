@@ -15,6 +15,7 @@ import java.util.Stack;
 public class MangaLibrary extends Application {
 
     public final Callback<Class<?>, Object> controllerFactory;
+    private final ConfigManager configManager;
     private final Stack<String> mainHistory;
     private MangaLibraryCtrl controller;
 
@@ -27,9 +28,8 @@ public class MangaLibrary extends Application {
                 throw new RuntimeException("Could not instantiate controller for " + clazz, e);
             }
         };
+        configManager = new ConfigManager();
         mainHistory = new Stack<>();
-
-        new ConfigManager();
     }
 
     @Override
@@ -39,11 +39,16 @@ public class MangaLibrary extends Application {
         Parent app = loader.load();
         controller = loader.getController();
 
+        app.getStylesheets().add(getClass().getClassLoader().getResource("style.css").toExternalForm());
         stage.setTitle("Manga Library");
         stage.setScene(new Scene(app));
         stage.setMinWidth(400);
         stage.setMinHeight(100);
         stage.show();
+    }
+
+    public ConfigManager getConfigManager() {
+        return configManager;
     }
 
     public MangaLibraryCtrl getController() {
