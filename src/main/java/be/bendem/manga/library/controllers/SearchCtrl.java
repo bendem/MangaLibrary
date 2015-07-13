@@ -35,11 +35,19 @@ public class SearchCtrl implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        searchResult.getSelectionModel().selectedItemProperty().addListener((obj, oldVal, newVal) ->
-                selectChapters.setDisable(newVal == null || newVal.isEmpty())
-        );
+        searchResult.getSelectionModel().selectedItemProperty().addListener((obj, oldVal, newVal)
+            -> selectChapters.setDisable(newVal == null || newVal.isEmpty()));
 
         hostComboBox.getItems().setAll(ScraperImplementation.values());
+
+        hostComboBox.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal)
+            -> updateSearchButtonStatus());
+        searchField.textProperty().addListener((obs, oldVal, newVal)
+            -> updateSearchButtonStatus());
+    }
+
+    private void updateSearchButtonStatus() {
+        searchButton.setDisable(hostComboBox.getSelectionModel().isEmpty() || searchField.getText().isEmpty());
     }
 
     public void searchFieldKeyPressed(KeyEvent event) {
