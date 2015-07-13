@@ -72,6 +72,7 @@ public class ApplicationConfig implements ConfigMap {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <T> T get(String key) {
         return (T) config.get(key);
     }

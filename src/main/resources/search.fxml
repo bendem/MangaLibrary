@@ -8,20 +8,24 @@
 
 <VBox alignment="CENTER" fillWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.bendem.manga.library.controllers.SearchCtrl">
     <children>
-        <HBox alignment="CENTER" fillHeight="true" maxWidth="1.7976931348623157E308" VBox.vgrow="NEVER">
-            <children>
-                <Text text="Search" textOrigin="CENTER" wrappingWidth="51.86279296875" HBox.hgrow="ALWAYS">
-                    <HBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                    </HBox.margin>
-                </Text>
-                <TextField fx:id="searchField" maxWidth="1.7976931348623157E308" onKeyPressed="#searchFieldKeyPressed" HBox.hgrow="ALWAYS">
-                    <HBox.margin>
-                        <Insets left="5.0" />
-                    </HBox.margin>
-                </TextField>
-            </children>
-        </HBox>
+      <GridPane alignment="TOP_CENTER" hgap="10.0" vgap="5.0" VBox.vgrow="NEVER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="NEVER" />
+          <ColumnConstraints hgrow="ALWAYS" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints vgrow="NEVER" />
+          <RowConstraints vgrow="NEVER" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+        </rowConstraints>
+         <children>
+            <Label text="Search" />
+            <TextField fx:id="searchField" maxWidth="1.7976931348623157E308" onKeyPressed="#searchFieldKeyPressed" GridPane.columnIndex="1" />
+            <Label text="Host" GridPane.rowIndex="1" />
+            <ComboBox fx:id="hostComboBox" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Button fx:id="searchButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onSearchButtonAction" text="Search" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+         </children>
+      </GridPane>
         <ListView fx:id="searchResult" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onKeyPressed="#searchResultKeyPressed" VBox.vgrow="ALWAYS">
             <VBox.margin>
                 <Insets top="5.0" />
