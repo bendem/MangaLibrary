@@ -1,6 +1,6 @@
 # MangaLibrary
 
-![Application screenshot](https://i.imgur.com/L0QYGJq.png)
+![Application screenshot](https://i.imgur.com/7NAoe97.png)
 
 ## Compilation
 
