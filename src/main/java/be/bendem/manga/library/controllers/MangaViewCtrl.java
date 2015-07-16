@@ -6,6 +6,7 @@ import be.bendem.manga.library.utils.NumberUtil;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,6 +16,7 @@ import java.nio.file.Paths;
 
 public class MangaViewCtrl {
 
+    @FXML private VBox imageContainer;
     @FXML private ImageView image;
 
     private final MangaLibrary app;
@@ -48,6 +50,11 @@ public class MangaViewCtrl {
         } catch(IOException e) {
             throw new RuntimeException(e);
         }
+        // TODO Loading bar using img.progressProperty()!
+        image.setSmooth(true);
+        image.setPreserveRatio(true);
+        image.setFitHeight(imageContainer.getHeight());
+        image.setFitWidth(imageContainer.getWidth());
         image.setImage(new Image(is));
     }
 
