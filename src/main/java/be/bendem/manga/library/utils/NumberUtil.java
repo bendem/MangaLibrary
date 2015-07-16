@@ -16,4 +16,8 @@ public class NumberUtil {
         return i;
     }
 
+    public static int compare(String str1, String str2) {
+        return Integer.compare(getInt(str1), getInt(str2));
+    }
+
 }

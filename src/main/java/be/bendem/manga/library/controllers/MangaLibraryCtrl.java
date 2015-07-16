@@ -56,10 +56,7 @@ public class MangaLibraryCtrl implements Initializable {
                     manga.getFileName().toString(),
                     collectDirectories(manga)
                         .map(subPath -> subPath.getFileName().toString())
-                        .sorted((ch1, ch2) -> Integer.compare(
-                            NumberUtil.getInt(ch1),
-                            NumberUtil.getInt(ch2)
-                        ))
+                        .sorted(NumberUtil::compare)
                         .collect(Collectors.toList())
                 )
             );
@@ -102,8 +99,17 @@ public class MangaLibraryCtrl implements Initializable {
         return (T) mainCurrentCtrl;
     }
 
-    public void addManga(String name, List<String> chapters) {
-        TitledPane pane = new TitledPane(name, new ListView<>(FXCollections.observableArrayList(chapters)));
+    public void setMain(Parent parent) {
+        main.getChildren().setAll(parent);
+    }
+
+    private void addManga(String name, List<String> chapters) {
+        ListView<String> content = new ListView<>(FXCollections.observableArrayList(chapters));
+        content.getSelectionModel().selectedItemProperty().addListener(
+            (obs, oldVal, newVal) -> this.<MangaViewCtrl>setMain("manga-view.fxml").setChapter(name, newVal)
+        );
+
+        TitledPane pane = new TitledPane(name, content);
         pane.setFont(new Font(15));
 
         accordion.getPanes().add(pane);
@@ -122,11 +128,7 @@ public class MangaLibraryCtrl implements Initializable {
     }
 
     public void onImportAction(ActionEvent event) {
-        setMain("import.fxml");
-    }
-
-    public void setMain(Parent parent) {
-        main.getChildren().setAll(parent);
+        // TODO Open file chooser
     }
 
 }

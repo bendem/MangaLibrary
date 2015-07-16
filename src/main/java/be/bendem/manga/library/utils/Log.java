@@ -31,6 +31,7 @@ public class Log {
                     );
                 }
             });
+            handler.setLevel(Level.ALL);
 
             addHandler(handler);
         }
