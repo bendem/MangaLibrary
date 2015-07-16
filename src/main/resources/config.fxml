@@ -1,47 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 
-<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.bendem.manga.library.controllers.ConfigCtrl">
-   <children>
-      <Label text="Config" VBox.vgrow="NEVER">
-         <font>
-            <Font size="18.0" />
-         </font>
-         <VBox.margin>
-            <Insets bottom="10.0" top="5.0" />
-         </VBox.margin>
-      </Label>
-      <GridPane hgap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" vgap="5.0" VBox.vgrow="ALWAYS">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" />
-          <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints vgrow="NEVER" />
-          <RowConstraints vgrow="NEVER" />
-            <RowConstraints vgrow="NEVER" />
-        </rowConstraints>
-         <children>
-             <Label text="Library location" />
-             <TextField fx:id="libraryLocationField" GridPane.columnIndex="1" />
-             <Label text="Placeholder" GridPane.rowIndex="1" />
-             <TextField editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-             <Label text="Placeholder" GridPane.rowIndex="2" />
-             <TextField editable="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-         </children>
-      </GridPane>
-      <Button fx:id="saveButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onSaveAction" text="Save" VBox.vgrow="NEVER">
-         <VBox.margin>
-            <Insets top="10.0" />
-         </VBox.margin>
-      </Button>
-   </children>
-   <padding>
-      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-   </padding>
+<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="5.0"
+      fx:controller="be.bendem.manga.library.controllers.ConfigCtrl"
+      AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"
+      xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Label text="Config" VBox.vgrow="NEVER">
+            <font>
+                <Font size="18.0" />
+            </font>
+            <VBox.margin>
+                <Insets bottom="5.0" />
+            </VBox.margin>
+        </Label>
+        <GridPane hgap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" vgap="5.0" VBox.vgrow="ALWAYS">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" />
+                <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints vgrow="NEVER" />
+                <RowConstraints vgrow="NEVER" />
+                <RowConstraints vgrow="NEVER" />
+            </rowConstraints>
+            <children>
+                <Label text="Library location" />
+                <TextField fx:id="libraryLocationField" GridPane.columnIndex="1" />
+                <Label text="Placeholder" GridPane.rowIndex="1" />
+                <TextField editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <Label text="Placeholder" GridPane.rowIndex="2" />
+                <TextField editable="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            </children>
+        </GridPane>
+        <Button fx:id="saveButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onSaveAction" text="Save" VBox.vgrow="NEVER">
+            <VBox.margin>
+                <Insets top="5.0" />
+            </VBox.margin>
+        </Button>
+    </children>
 </VBox>

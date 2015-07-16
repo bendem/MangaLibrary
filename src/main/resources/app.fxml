@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.*?>
-<?import javafx.scene.input.*?>
-<?import java.lang.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 
-<HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.bendem.manga.library.controllers.MangaLibraryCtrl">
+<HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="5.0"
+      fx:controller="be.bendem.manga.library.controllers.MangaLibraryCtrl"
+      xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <VBox>
+        <VBox maxHeight="1.7976931348623157E308" maxWidth="250.0" minWidth="250.0" prefWidth="250.0" spacing="5.0">
             <children>
                 <SplitMenuButton maxWidth="1.7976931348623157E308" onAction="#onSearchAction" text="_Search">
                     <items>
@@ -18,15 +17,18 @@
                         <MenuItem onAction="#onImportAction" text="_Import" />
                     </items>
                     <VBox.margin>
-                        <Insets bottom="5.0" />
+                        <Insets />
                     </VBox.margin>
                 </SplitMenuButton>
-                <Accordion fx:id="accordion" maxHeight="1.7976931348623157E308" prefWidth="250.0" VBox.vgrow="ALWAYS" />
+                <Accordion fx:id="accordion" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS" />
             </children>
             <HBox.margin>
-                <Insets bottom="5.0" left="5.0" top="5.0" />
+                <Insets />
             </HBox.margin>
         </VBox>
-        <AnchorPane fx:id="main" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="400.0" HBox.hgrow="ALWAYS" />
+        <AnchorPane fx:id="main" maxHeight="1.7976931348623157E308" minWidth="300.0" HBox.hgrow="ALWAYS" />
     </children>
+    <padding>
+        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+    </padding>
 </HBox>
