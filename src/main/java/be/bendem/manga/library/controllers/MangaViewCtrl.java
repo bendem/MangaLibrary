@@ -40,7 +40,7 @@ public class MangaViewCtrl {
             Path path = Files
                 .walk(location)
                 .skip(1)
-                .sorted((p1, p2) -> NumberUtil.compare(p1.getFileName().toString(), p2.getFileName().toString()))
+                .sorted(NumberUtil::compare)
                 .findFirst()
                 .get();
             Log.info(path.toString());
