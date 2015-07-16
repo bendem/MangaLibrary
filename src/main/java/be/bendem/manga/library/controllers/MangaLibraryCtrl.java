@@ -106,7 +106,10 @@ public class MangaLibraryCtrl implements Initializable {
     private void addManga(String name, List<String> chapters) {
         ListView<String> content = new ListView<>(FXCollections.observableArrayList(chapters));
         content.getSelectionModel().selectedItemProperty().addListener(
-            (obs, oldVal, newVal) -> this.<MangaViewCtrl>setMain("manga-view.fxml").setChapter(name, newVal)
+            (obs, oldVal, newVal) -> this
+                .<MangaViewCtrl>setMain("manga-view.fxml")
+                .setManga(name)
+                .setChapter(newVal, false)
         );
 
         TitledPane pane = new TitledPane(name, content);

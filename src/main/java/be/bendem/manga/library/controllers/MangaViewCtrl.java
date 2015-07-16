@@ -16,7 +16,11 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 public class MangaViewCtrl implements Initializable {
 
@@ -24,58 +28,107 @@ public class MangaViewCtrl implements Initializable {
     @FXML private ImageView image;
 
     private final MangaLibrary app;
+    private Path currentManga;
+    private TreeMap<String, Path> chapters;
+    private String currentChapter;
+    private List<Path> images;
+    private int index;
 
     public MangaViewCtrl(MangaLibrary app) {
         this.app = app;
+        chapters = new TreeMap<>(NumberUtil::compare);
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         imageContainer.autosize();
+
+        image.setSmooth(true);
+        image.setPreserveRatio(true);
     }
 
-    public void setChapter(String manga, String chapter) {
-        Log.debug("Loading " + manga + ": " + chapter);
-        Path location = Paths
-            .get(app
-                    .getConfigManager()
-                    .getApplicationConfig()
-                    .<String>get("libraryLocation")
-            )
-            .resolve(manga)
-            .resolve(chapter);
+    public MangaViewCtrl setManga(String manga) {
+        currentManga = Paths
+            .get(app.getConfigManager().getApplicationConfig().<String>get("libraryLocation"))
+            .resolve(manga);
 
-
-        InputStream is;
+        chapters.clear();
         try {
-            Path path = Files
-                .walk(location)
-                .skip(1)
-                .sorted(NumberUtil::compare)
-                .findFirst()
-                .get();
-            //Log.info(path.toString());
-            is = Files.newInputStream(path);
+            chapters.putAll(
+                Files
+                    .walk(currentManga, 1)
+                    .skip(1)
+                    .collect(Collectors.toMap(
+                        path -> path.getFileName().toString(),
+                        path -> path
+                    ))
+            );
         } catch(IOException e) {
             throw new RuntimeException(e);
         }
+
+        return this;
+    }
+
+    public MangaViewCtrl setChapter(String chapter, boolean last) {
+        currentChapter = chapter;
+        return setChapter(chapters.get(chapter), last);
+    }
+
+    private MangaViewCtrl setChapter(Path chapter, boolean last) {
+        try {
+            images = Files
+                .walk(chapter, 1)
+                .skip(1)
+                .sorted(NumberUtil::compare)
+                .collect(Collectors.toList());
+        } catch(IOException e) {
+            throw new RuntimeException(e);
+        }
+        index = last ? images.size() - 1 : 0;
+
+        setImage(images.get(index));
+        return this;
+    }
+
+    private void setImage(Path img) {
+        InputStream is;
+        try {
+            is = Files.newInputStream(img);
+        } catch(IOException e) {
+            throw new RuntimeException(e);
+        }
+
         // TODO Loading bar using img.progressProperty()!
         Log.debug("w" + imageContainer.getWidth() + " h" + imageContainer.getHeight());
         Log.debug(imageContainer.getBoundsInLocal().toString());
 
-        image.setSmooth(true);
-        image.setPreserveRatio(true);
         image.setFitHeight(imageContainer.getHeight());
         image.setFitWidth(imageContainer.getWidth());
         image.setImage(new Image(is));
     }
 
     public void onPrevAction(ActionEvent event) {
-        // TODO
+        if(index == 0) {
+            Map.Entry<String, Path> previous = chapters.lowerEntry(currentChapter);
+            if(previous != null) {
+                setChapter(previous.getKey(), true);
+                // TODO Change selection on sidebar
+            }
+            return;
+        }
+        setImage(images.get(--index));
     }
 
     public void onNextAction(ActionEvent event) {
-        // TODO
+        if(index == images.size() - 1) {
+            Map.Entry<String, Path> previous = chapters.higherEntry(currentChapter);
+            if(previous != null) {
+                setChapter(previous.getKey(), false);
+                // TODO Change selection on sidebar
+            }
+            return;
+        }
+        setImage(images.get(++index));
     }
-
 }
