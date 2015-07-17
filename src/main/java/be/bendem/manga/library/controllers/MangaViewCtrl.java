@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
@@ -25,6 +26,7 @@ import java.util.stream.Collectors;
 public class MangaViewCtrl implements Initializable {
 
     @FXML private VBox imageContainer;
+    @FXML private HBox buttonContainer;
     @FXML private ImageView image;
 
     private final MangaLibrary app;
@@ -103,7 +105,7 @@ public class MangaViewCtrl implements Initializable {
         Log.debug("w" + imageContainer.getWidth() + " h" + imageContainer.getHeight());
         Log.debug(imageContainer.getBoundsInLocal().toString());
 
-        image.setFitHeight(imageContainer.getHeight());
+        image.setFitHeight(imageContainer.getHeight() - buttonContainer.getHeight() - imageContainer.getSpacing());
         image.setFitWidth(imageContainer.getWidth());
         image.setImage(new Image(is));
 
