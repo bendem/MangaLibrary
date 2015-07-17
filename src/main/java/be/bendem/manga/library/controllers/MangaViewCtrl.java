@@ -42,9 +42,6 @@ public class MangaViewCtrl implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         imageContainer.autosize();
-
-        image.setSmooth(true);
-        image.setPreserveRatio(true);
     }
 
     public MangaViewCtrl setManga(String manga) {
@@ -106,6 +103,12 @@ public class MangaViewCtrl implements Initializable {
         image.setFitHeight(imageContainer.getHeight());
         image.setFitWidth(imageContainer.getWidth());
         image.setImage(new Image(is));
+
+        try {
+            is.close();
+        } catch(IOException e) {
+            Log.err("Could not close image stream", e);
+        }
     }
 
     public void onPrevAction(ActionEvent event) {
@@ -122,9 +125,9 @@ public class MangaViewCtrl implements Initializable {
 
     public void onNextAction(ActionEvent event) {
         if(index == images.size() - 1) {
-            Map.Entry<String, Path> previous = chapters.higherEntry(currentChapter);
-            if(previous != null) {
-                setChapter(previous.getKey(), false);
+            Map.Entry<String, Path> next = chapters.higherEntry(currentChapter);
+            if(next != null) {
+                setChapter(next.getKey(), false);
                 // TODO Change selection on sidebar
             }
             return;

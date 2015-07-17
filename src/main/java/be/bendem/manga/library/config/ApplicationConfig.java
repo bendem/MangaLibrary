@@ -51,7 +51,7 @@ public class ApplicationConfig implements ConfigMap {
             .collect(Collectors.toMap(
                 lineParts -> lineParts[0],
                 lineParts -> lineParts[1],
-                (a, b) -> a
+                (a, b) -> b
             ));
     }
 

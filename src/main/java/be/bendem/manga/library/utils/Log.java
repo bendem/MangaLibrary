@@ -20,7 +20,7 @@ public class Log {
             ConsoleHandler handler = new ConsoleHandler();
             handler.setFormatter(new Formatter() {
 
-                private final DateFormat format = new SimpleDateFormat("HHmmss");
+                private final DateFormat format = new SimpleDateFormat("HH.mm.ss");
 
                 @Override
                 public String format(LogRecord record) {

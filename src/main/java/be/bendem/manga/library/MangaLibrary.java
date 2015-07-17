@@ -3,6 +3,7 @@ package be.bendem.manga.library;
 import be.bendem.manga.library.config.ConfigManager;
 import be.bendem.manga.library.controllers.MangaLibraryCtrl;
 import javafx.application.Application;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -42,9 +43,21 @@ public class MangaLibrary extends Application {
         app.getStylesheets().add(getClass().getClassLoader().getResource("style.css").toExternalForm());
         stage.setTitle("Manga Library");
         stage.setScene(new Scene(app));
-        stage.setMinWidth(400);
-        stage.setMinHeight(100);
         stage.show();
+
+        stage.widthProperty().addListener(this::onWidthChange);
+        stage.heightProperty().addListener(this::onHeightChange);
+    }
+
+    private void onWidthChange(ObservableValue<? extends Number> obs, Number oldVal, Number newVal) {
+    }
+
+    private void onHeightChange(ObservableValue<? extends Number> obs, Number oldVal, Number newVal) {
+    }
+
+    @Override
+    public void stop() {
+        // TODO Save dimensions, position
     }
 
     public ConfigManager getConfigManager() {
