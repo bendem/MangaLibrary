@@ -41,8 +41,13 @@ public class MangaLibrary extends Application {
         controller = loader.getController();
 
         app.getStylesheets().add(getClass().getClassLoader().getResource("style.css").toExternalForm());
+
+        double width = Double.valueOf(configManager.getApplicationConfig().get("applicationWidth", "-1"));
+        double height = Double.valueOf(configManager.getApplicationConfig().get("applicationHeight", "-1"));
+
+        Scene scene = new Scene(app, width, height);
         stage.setTitle("Manga Library");
-        stage.setScene(new Scene(app));
+        stage.setScene(scene);
         stage.show();
 
         stage.widthProperty().addListener(this::onWidthChange);

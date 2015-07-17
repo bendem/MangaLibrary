@@ -63,6 +63,7 @@ public class ApplicationConfig implements ConfigMap {
                 path,
                 config.entrySet().stream()
                     .map(entry -> entry.getKey() + "=" + entry.getValue())
+                    .sorted()
                     .collect(Collectors.toList()),
                 StandardCharsets.UTF_8
             );
@@ -77,6 +78,12 @@ public class ApplicationConfig implements ConfigMap {
     @SuppressWarnings("unchecked")
     public <T> T get(String key) {
         return (T) config.get(key);
+    }
+
+    @Override
+    public <T> T get(String key, T def) {
+        T val = get(key);
+        return val == null ? def : val;
     }
 
     @Override
