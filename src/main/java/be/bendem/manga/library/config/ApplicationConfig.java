@@ -76,18 +76,18 @@ public class ApplicationConfig implements ConfigMap {
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T> T get(String key) {
-        return (T) config.get(key);
+    public String get(String key) {
+        return config.get(key);
     }
 
     @Override
-    public <T> T get(String key, T def) {
-        T val = get(key);
+    public String get(String key, String def) {
+        String val = get(key);
         return val == null ? def : val;
     }
 
     @Override
-    public <T> ApplicationConfig set(String key, T value) {
+    public ApplicationConfig set(String key, Object value) {
         // TODO Not use toString?
         config.put(key, value.toString());
 

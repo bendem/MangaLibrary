@@ -5,9 +5,9 @@ package be.bendem.manga.library.config;
  */
 public interface ConfigMap {
 
-    <T> T get(String key);
-    <T> T get(String key, T def);
-    <T> ConfigMap set(String key, T value);
+    String get(String key);
+    String get(String key, String def);
+    ConfigMap set(String key, Object value);
     ConfigMap save();
 
 }

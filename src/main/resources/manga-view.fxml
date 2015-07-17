@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
@@ -12,20 +11,10 @@
     <children>
         <HBox maxWidth="1.7976931348623157E308" spacing="5.0" VBox.vgrow="NEVER">
             <children>
-                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onPrevAction" text="Prev" HBox.hgrow="ALWAYS">
-                    <HBox.margin>
-                        <Insets />
-                    </HBox.margin>
-                </Button>
+                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onPrevAction" text="Prev" HBox.hgrow="ALWAYS" />
                 <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onNextAction" text="Next" HBox.hgrow="ALWAYS" />
             </children>
         </HBox>
-        <ImageView fx:id="image" VBox.vgrow="ALWAYS">
-            <VBox.margin>
-                <Insets />
-            </VBox.margin></ImageView>
+        <ImageView fx:id="image" VBox.vgrow="ALWAYS" />
     </children>
-    <padding>
-        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-    </padding>
 </VBox>

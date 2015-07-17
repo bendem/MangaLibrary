@@ -42,6 +42,9 @@ public class MangaViewCtrl implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         imageContainer.autosize();
+
+        image.setPreserveRatio(true);
+        image.setSmooth(true);
     }
 
     public MangaViewCtrl setManga(String manga) {
