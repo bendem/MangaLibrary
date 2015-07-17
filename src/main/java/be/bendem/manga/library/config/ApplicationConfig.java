@@ -55,7 +55,9 @@ public class ApplicationConfig implements ConfigMap {
             ));
     }
 
+    @Override
     public ApplicationConfig save() {
+        // TODO Offthread?
         try {
             Files.write(
                 path,
@@ -81,9 +83,6 @@ public class ApplicationConfig implements ConfigMap {
     public <T> ApplicationConfig set(String key, T value) {
         // TODO Not use toString?
         config.put(key, value.toString());
-
-        // TODO Offthread?
-        save();
 
         return this;
     }

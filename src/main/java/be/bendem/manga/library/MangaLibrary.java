@@ -50,14 +50,16 @@ public class MangaLibrary extends Application {
     }
 
     private void onWidthChange(ObservableValue<? extends Number> obs, Number oldVal, Number newVal) {
+        configManager.getApplicationConfig().set("applicationWidth", newVal);
     }
 
     private void onHeightChange(ObservableValue<? extends Number> obs, Number oldVal, Number newVal) {
+        configManager.getApplicationConfig().set("applicationHeight", newVal);
     }
 
     @Override
     public void stop() {
-        // TODO Save dimensions, position
+        configManager.getApplicationConfig().save();
     }
 
     public ConfigManager getConfigManager() {

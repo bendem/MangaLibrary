@@ -43,7 +43,11 @@ public class ConfigCtrl implements Initializable {
             return;
         }
 
-        app.getConfigManager().getApplicationConfig().set("libraryLocation", libraryLocationField.getText());
+        app
+            .getConfigManager()
+            .getApplicationConfig()
+            .set("libraryLocation", libraryLocationField.getText())
+            .save();
     }
 
     private void validateDirectoryExists(String path, ObservableList<String> classList) {

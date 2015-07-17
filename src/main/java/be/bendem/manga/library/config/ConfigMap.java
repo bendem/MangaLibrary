@@ -7,5 +7,6 @@ public interface ConfigMap {
 
     <T> T get(String key);
     <T> ConfigMap set(String key, T value);
+    ConfigMap save();
 
 }
