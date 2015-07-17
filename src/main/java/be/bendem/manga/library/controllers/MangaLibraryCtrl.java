@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.ListView;
@@ -99,7 +100,7 @@ public class MangaLibraryCtrl implements Initializable {
         return (T) mainCurrentCtrl;
     }
 
-    public void setMain(Parent parent) {
+    private void setMain(Parent parent) {
         main.getChildren().setAll(parent);
     }
 
@@ -116,6 +117,17 @@ public class MangaLibraryCtrl implements Initializable {
         pane.setFont(new Font(15));
 
         accordion.getPanes().add(pane);
+    }
+
+    public void setSelection(String manga, String chapter) {
+        Node content = accordion.getPanes().stream()
+            .filter(pane -> pane.getText().equals(manga))
+            .findFirst()
+            .get()
+            .getContent();
+        ListView<String> listView = (ListView<String>) content;
+        listView.getSelectionModel().select(chapter);
+        listView.scrollTo(chapter);
     }
 
     public void onSearchAction(ActionEvent event) {

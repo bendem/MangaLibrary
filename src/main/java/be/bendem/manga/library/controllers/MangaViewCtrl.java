@@ -30,7 +30,10 @@ public class MangaViewCtrl implements Initializable {
     @FXML private ImageView image;
 
     private final MangaLibrary app;
-    private Path currentManga;
+
+    private String currentManga;
+    private Path currentMangaPath;
+
     private TreeMap<String, Path> chapters;
     private String currentChapter;
     private List<Path> images;
@@ -50,7 +53,8 @@ public class MangaViewCtrl implements Initializable {
     }
 
     public MangaViewCtrl setManga(String manga) {
-        currentManga = Paths
+        currentManga = manga;
+        currentMangaPath = Paths
             .get(app.getConfigManager().getApplicationConfig().<String>get("libraryLocation"))
             .resolve(manga);
 
@@ -58,7 +62,7 @@ public class MangaViewCtrl implements Initializable {
         try {
             chapters.putAll(
                 Files
-                    .walk(currentManga, 1)
+                    .walk(currentMangaPath, 1)
                     .skip(1)
                     .collect(Collectors.toMap(
                         path -> path.getFileName().toString(),
@@ -102,9 +106,6 @@ public class MangaViewCtrl implements Initializable {
         }
 
         // TODO Loading bar using img.progressProperty()!
-        Log.debug("w" + imageContainer.getWidth() + " h" + imageContainer.getHeight());
-        Log.debug(imageContainer.getBoundsInLocal().toString());
-
         image.setFitHeight(imageContainer.getHeight() - buttonContainer.getHeight() - imageContainer.getSpacing());
         image.setFitWidth(imageContainer.getWidth());
         image.setImage(new Image(is));
@@ -120,8 +121,8 @@ public class MangaViewCtrl implements Initializable {
         if(index == 0) {
             Map.Entry<String, Path> previous = chapters.lowerEntry(currentChapter);
             if(previous != null) {
+                app.getController().setSelection(currentManga, previous.getKey());
                 setChapter(previous.getKey(), true);
-                // TODO Change selection on sidebar
             }
             return;
         }
@@ -132,8 +133,8 @@ public class MangaViewCtrl implements Initializable {
         if(index == images.size() - 1) {
             Map.Entry<String, Path> next = chapters.higherEntry(currentChapter);
             if(next != null) {
+                app.getController().setSelection(currentManga, next.getKey());
                 setChapter(next.getKey(), false);
-                // TODO Change selection on sidebar
             }
             return;
         }
