@@ -2,7 +2,6 @@ package be.bendem.manga.library.controllers;
 
 import be.bendem.manga.library.MangaLibrary;
 import be.bendem.manga.scraper.MangaScraper;
-import be.bendem.manga.scraper.implementations.MangaEdenScraper;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -35,7 +34,7 @@ public class ChapterSelectionCtrl implements Initializable {
         title.setText(name);
         chapters.getItems().setAll(
             scrapper
-                .getChapters(url).stream()
+                .getChapters(url, Throwable::printStackTrace).stream()
                 .map(chapter -> chapter.name)
                 .collect(Collectors.toList())
         );

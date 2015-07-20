@@ -86,7 +86,7 @@ public class SearchCtrl implements Initializable {
 
         searchResult.getItems().clear();
         mangaScraper = new MangaScraper(scraper);
-        currentSearchResult = mangaScraper.search(text);
+        currentSearchResult = mangaScraper.search(text, Throwable::printStackTrace);
         if(currentSearchResult.isEmpty()) {
             // TODO Visual effect
             return;
