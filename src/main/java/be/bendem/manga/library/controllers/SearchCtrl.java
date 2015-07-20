@@ -3,6 +3,7 @@ package be.bendem.manga.library.controllers;
 import be.bendem.manga.library.MangaLibrary;
 import be.bendem.manga.library.ScraperImplementation;
 import be.bendem.manga.library.utils.Log;
+import be.bendem.manga.scraper.MangaScraper;
 import be.bendem.manga.scraper.Scraper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,6 +29,7 @@ public class SearchCtrl implements Initializable {
 
     private final MangaLibrary app;
     private Map<String, String> currentSearchResult;
+    private MangaScraper mangaScraper;
 
     public SearchCtrl(MangaLibrary app) {
         this.app = app;
@@ -83,7 +85,8 @@ public class SearchCtrl implements Initializable {
         }
 
         searchResult.getItems().clear();
-        currentSearchResult = scraper.search(text);
+        mangaScraper = new MangaScraper(scraper);
+        currentSearchResult = mangaScraper.search(text);
         if(currentSearchResult.isEmpty()) {
             // TODO Visual effect
             return;
@@ -104,6 +107,6 @@ public class SearchCtrl implements Initializable {
         app
             .getController()
             .<ChapterSelectionCtrl>setMain("chapter-selection.fxml")
-            .setManga(selected, currentSearchResult.get(selected));
+            .setManga(mangaScraper, selected, currentSearchResult.get(selected));
     }
 }

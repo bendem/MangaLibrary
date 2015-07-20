@@ -30,11 +30,11 @@ public class ChapterSelectionCtrl implements Initializable {
         this.app = app;
     }
 
-    public void setManga(String name, String url) {
+    public void setManga(MangaScraper scrapper, String name, String url) {
         System.out.println("Feeding data");
         title.setText(name);
-        chapters.getItems().addAll(
-            new MangaScraper(new MangaEdenScraper())
+        chapters.getItems().setAll(
+            scrapper
                 .getChapters(url).stream()
                 .map(chapter -> chapter.name)
                 .collect(Collectors.toList())
