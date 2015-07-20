@@ -64,6 +64,10 @@ public class MangaLibraryCtrl implements Initializable {
     }
 
     Stream<Path> collectDirectories(Path path) {
+        if(!Files.isDirectory(path)) {
+            return Stream.empty();
+        }
+
         try {
             return Files.walk(path, 1)
                 .filter(subPath -> !subPath.equals(path))
