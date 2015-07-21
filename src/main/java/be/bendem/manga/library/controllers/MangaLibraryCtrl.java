@@ -28,15 +28,15 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class MangaLibraryCtrl implements Initializable {
+public class MangaLibraryCtrl implements Controller, Initializable {
 
     @FXML private Accordion accordion;
     @FXML private AnchorPane main;
 
     private final MangaLibrary app;
-    private final Map<String, Tuple<Parent, Object>> mainCache;
+    private final Map<String, Tuple<Parent, Controller>> mainCache;
     private String mainCurrentFxml;
-    private Object mainCurrentCtrl;
+    private Controller mainCurrentCtrl;
 
     public MangaLibraryCtrl(MangaLibrary app) {
         this.app = app;
@@ -83,7 +83,7 @@ public class MangaLibraryCtrl implements Initializable {
             return (T) mainCurrentCtrl;
         }
 
-        Tuple<Parent, Object> parentCtrlTuple = mainCache.get(fxml);
+        Tuple<Parent, Controller> parentCtrlTuple = mainCache.get(fxml);
 
         if(parentCtrlTuple == null) {
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(fxml));
@@ -100,6 +100,7 @@ public class MangaLibraryCtrl implements Initializable {
         app.pushHistory(mainCurrentFxml);
         mainCurrentFxml = fxml;
         mainCurrentCtrl = parentCtrlTuple.getRight();
+        mainCurrentCtrl.afterInitialization();
 
         return (T) mainCurrentCtrl;
     }

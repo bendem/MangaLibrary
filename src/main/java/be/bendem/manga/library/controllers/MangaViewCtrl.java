@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
-public class MangaViewCtrl implements Initializable {
+public class MangaViewCtrl implements Controller, Initializable {
 
     @FXML private VBox imageContainer;
     @FXML private HBox buttonContainer;
@@ -50,10 +50,13 @@ public class MangaViewCtrl implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        imageContainer.autosize();
-
         image.setPreserveRatio(true);
         image.setSmooth(true);
+    }
+
+    @Override
+    public void afterInitialization() {
+        imageContainer.autosize();
     }
 
     public MangaViewCtrl setManga(String manga) {

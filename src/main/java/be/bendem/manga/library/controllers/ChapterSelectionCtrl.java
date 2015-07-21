@@ -15,7 +15,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
-public class ChapterSelectionCtrl implements Initializable {
+public class ChapterSelectionCtrl implements Controller, Initializable {
 
     private final MangaLibrary app;
     @FXML private Label title;

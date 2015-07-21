@@ -19,7 +19,7 @@ import java.net.URL;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-public class SearchCtrl implements Initializable {
+public class SearchCtrl implements Controller, Initializable {
 
     @FXML private TextField searchField;
     @FXML private ComboBox<ScraperImplementation> hostComboBox;

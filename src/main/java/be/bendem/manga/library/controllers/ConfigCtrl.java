@@ -14,7 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ResourceBundle;
 
-public class ConfigCtrl implements Initializable {
+public class ConfigCtrl implements Controller, Initializable {
 
     @FXML private TextField libraryLocationField;
     @FXML private Button saveButton;
