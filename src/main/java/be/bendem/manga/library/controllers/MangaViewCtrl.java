@@ -39,6 +39,10 @@ public class MangaViewCtrl implements Initializable {
     private List<Path> images;
     private int index;
 
+    private Image previous;
+    private Image current;
+    private Image next;
+
     public MangaViewCtrl(MangaLibrary app) {
         this.app = app;
         chapters = new TreeMap<>(NumberUtil::compare);
@@ -93,32 +97,43 @@ public class MangaViewCtrl implements Initializable {
         }
         index = last ? images.size() - 1 : 0;
 
-        setImage(images.get(index));
+        current = getImage(images.get(index));
+        setImage(current);
+
+        // Load previous / next image
+        if(images.size() == 1) {
+            previous = null;
+            next = null;
+        } else {
+            if(last) {
+                previous = getImage(images.get(index - 1));
+                next = null;
+            } else {
+                previous = null;
+                next = getImage(images.get(index + 1));
+            }
+        }
         return this;
     }
 
-    private void setImage(Path img) {
-        InputStream is;
-        try {
-            is = Files.newInputStream(img);
+    private Image getImage(Path img) {
+        Log.debug("loading " + img);
+        try(InputStream is = Files.newInputStream(img)) {
+            return new Image(is);
         } catch(IOException e) {
             throw new RuntimeException(e);
         }
+    }
 
+    private void setImage(Image img) {
         // TODO Loading bar using img.progressProperty()!
         image.setFitHeight(imageContainer.getHeight() - buttonContainer.getHeight() - imageContainer.getSpacing());
         image.setFitWidth(imageContainer.getWidth());
-        image.setImage(new Image(is));
-
-        try {
-            is.close();
-        } catch(IOException e) {
-            Log.err("Could not close image stream", e);
-        }
+        image.setImage(img);
     }
 
     public void onPrevAction(ActionEvent event) {
-        if(index == 0) {
+        if(previous == null) { // index == 0
             Map.Entry<String, Path> previous = chapters.lowerEntry(currentChapter);
             if(previous != null) {
                 app.getController().setSelection(currentManga, previous.getKey());
@@ -126,11 +141,21 @@ public class MangaViewCtrl implements Initializable {
             }
             return;
         }
-        setImage(images.get(--index));
+
+        setImage(previous);
+        next = current;
+        current = previous;
+        --index;
+
+        if(index < 1) {
+            previous = null;
+        } else {
+            previous = getImage(images.get(index - 1));
+        }
     }
 
     public void onNextAction(ActionEvent event) {
-        if(index == images.size() - 1) {
+        if(next == null) { // index == images.size() - 1
             Map.Entry<String, Path> next = chapters.higherEntry(currentChapter);
             if(next != null) {
                 app.getController().setSelection(currentManga, next.getKey());
@@ -138,6 +163,16 @@ public class MangaViewCtrl implements Initializable {
             }
             return;
         }
-        setImage(images.get(++index));
+
+        setImage(next);
+        previous = current;
+        current = next;
+        ++index;
+
+        if(index == images.size() - 1) {
+            next = null;
+        } else {
+            next = getImage(images.get(index + 1));
+        }
     }
 }
