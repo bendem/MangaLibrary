@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
-public class MangaViewCtrl implements Controller, Initializable {
+public class MangaViewCtrl implements PostInitializable, Initializable {
 
     @FXML private VBox imageContainer;
     @FXML private HBox buttonContainer;

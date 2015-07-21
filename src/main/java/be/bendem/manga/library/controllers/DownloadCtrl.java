@@ -5,7 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 
-public class DownloadCtrl implements Controller {
+public class DownloadCtrl {
 
     @FXML private ListView<String> downloadList;
 
