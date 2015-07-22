@@ -5,7 +5,6 @@ import be.bendem.manga.library.utils.Log;
 import be.bendem.manga.library.utils.NumberUtil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -13,17 +12,15 @@ import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
-public class MangaViewCtrl implements PostInitializable, Initializable {
+public class MangaViewCtrl implements PostInitializable {
 
     @FXML private VBox imageContainer;
     @FXML private HBox buttonContainer;
@@ -39,19 +36,13 @@ public class MangaViewCtrl implements PostInitializable, Initializable {
     private List<Path> images;
     private int index;
 
-    private Image previous;
-    private Image current;
-    private Image next;
+    private ImageView previous;
+    private ImageView current;
+    private ImageView next;
 
     public MangaViewCtrl(MangaLibrary app) {
         this.app = app;
         chapters = new TreeMap<>(NumberUtil::compare);
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        image.setPreserveRatio(true);
-        image.setSmooth(true);
     }
 
     @Override
@@ -119,20 +110,26 @@ public class MangaViewCtrl implements PostInitializable, Initializable {
         return this;
     }
 
-    private Image getImage(Path img) {
+    private ImageView getImage(Path img) {
         Log.debug("loading " + img);
+        Image image;
         try(InputStream is = Files.newInputStream(img)) {
-            return new Image(is);
+            image = new Image(is);
         } catch(IOException e) {
             throw new RuntimeException(e);
         }
+
+        ImageView imageView = new ImageView(image);
+        imageView.setSmooth(true);
+        imageView.setPreserveRatio(true);
+        return imageView;
     }
 
-    private void setImage(Image img) {
+    private void setImage(ImageView imageView) {
         // TODO Loading bar using img.progressProperty()!
-        image.setFitHeight(imageContainer.getHeight() - buttonContainer.getHeight() - imageContainer.getSpacing());
-        image.setFitWidth(imageContainer.getWidth());
-        image.setImage(img);
+        imageView.setFitHeight(imageContainer.getHeight() - buttonContainer.getHeight() - imageContainer.getSpacing());
+        imageView.setFitWidth(imageContainer.getWidth());
+        imageContainer.getChildren().set(1, imageView);
     }
 
     public void onPrevAction(ActionEvent event) {
