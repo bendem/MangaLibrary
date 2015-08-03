@@ -3,6 +3,8 @@ package be.bendem.manga.library.controllers;
 import be.bendem.manga.library.MangaLibrary;
 import be.bendem.manga.library.utils.NumberUtil;
 import be.bendem.manga.library.utils.Tuple;
+import javafx.beans.property.IntegerPropertyBase;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,7 +14,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableSelectionModel;
 import javafx.scene.control.TitledPane;
+import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 
@@ -113,12 +117,23 @@ public class MangaLibraryCtrl implements Initializable {
 
     private void addManga(String name, List<String> chapters) {
         ListView<String> content = new ListView<>(FXCollections.observableArrayList(chapters));
+
         content.getSelectionModel().selectedItemProperty().addListener(
             (obs, oldVal, newVal) -> this
                 .<MangaViewCtrl>setMain("manga-view.fxml")
                 .setManga(name)
                 .setChapter(newVal, false)
         );
+
+        SimpleIntegerProperty readMarkerIndex = new SimpleIntegerProperty(-1);
+        content.getSelectionModel().selectedIndexProperty().addListener(
+            (obs, oldVal, newVal) -> {
+                if(newVal.intValue() > readMarkerIndex.get()) {
+                    readMarkerIndex.setValue(newVal);
+                }
+            }
+        );
+        content.setCellFactory(listView -> new MarkableTextFieldListCell(readMarkerIndex, "read-marker"));
 
         TitledPane pane = new TitledPane(name, content);
         pane.setFont(new Font(15));
@@ -153,4 +168,38 @@ public class MangaLibraryCtrl implements Initializable {
         // TODO Open file chooser
     }
 
+    private class MarkableTextFieldListCell<T> extends TextFieldListCell<T> {
+
+        private final IntegerPropertyBase index;
+        private final String styleClass;
+        private boolean marked = false;
+
+        public MarkableTextFieldListCell(IntegerPropertyBase index, String styleClass) {
+            this.index = index;
+            this.styleClass = styleClass;
+
+            index.addListener((obs, oldVal, newVal) -> {
+                if(marked) {
+                    getStyleClass().remove(styleClass);
+                    marked = false;
+                    this.applyCss();
+                } else if(this.getIndex() == newVal.intValue()) {
+                    getStyleClass().add(styleClass);
+                    marked = true;
+                    this.applyCss();
+                }
+            });
+
+            indexProperty().addListener((obs, oldVal, newVal) -> {
+                if(newVal.intValue() == index.get()) {
+                    getStyleClass().add(styleClass);
+                    marked = true;
+                } else {
+                    getStyleClass().remove(styleClass);
+                    marked = false;
+                }
+            });
+        }
+
+    }
 }

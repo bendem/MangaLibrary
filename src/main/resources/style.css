@@ -6,3 +6,7 @@
     -fx-text-fill: darkred;
     -fx-focus-color: red;
 }
+
+.read-marker {
+    -fx-control-inner-background: lightblue;
+}
