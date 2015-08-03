@@ -14,7 +14,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TableSelectionModel;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.layout.AnchorPane;
@@ -125,10 +124,12 @@ public class MangaLibraryCtrl implements Initializable {
                 .setChapter(newVal, false)
         );
 
+        // TODO Load that value, default to -1
         SimpleIntegerProperty readMarkerIndex = new SimpleIntegerProperty(-1);
         content.getSelectionModel().selectedIndexProperty().addListener(
             (obs, oldVal, newVal) -> {
                 if(newVal.intValue() > readMarkerIndex.get()) {
+                    // TODO Save the new value
                     readMarkerIndex.setValue(newVal);
                 }
             }
